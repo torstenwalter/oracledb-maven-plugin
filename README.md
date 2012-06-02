@@ -7,7 +7,7 @@ Installation
 ------------
 1. Download jar file and pom for the latest version.
 2. Install plugin in your local maven repository
-   mvn install:install-file -Dfile=oracledb-maven-plugin-1.0.jar -DpomFile=oracledb-maven-plugin-1.0.pom
+   `mvn install:install-file -Dfile=oracledb-maven-plugin-1.0.jar -DpomFile=oracledb-maven-plugin-1.0.pom`
 
 
 Usage
