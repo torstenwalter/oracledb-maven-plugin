@@ -3,6 +3,13 @@ oracledb-maven-plugin
 
 The plugin provides you some goals to help execute oracle database tools like sqlplus, impdp and expdp.
 
+Installation
+------------
+1. Download jar file and pom for the latest version.
+2. Install plugin in your local maven repository
+   mvn install:install-file -Dfile=oracledb-maven-plugin-1.0.jar -DpomFile=oracledb-maven-plugin-1.0.pom
+
+
 Usage
 -----
 
