@@ -6,11 +6,11 @@ The plugin provides you some goals to help execute oracle database tools like sq
 Usage
 -----
 
-<project>
-  ...
-  <build>
-     ...
-  </build>
-  ...
-</project>
+    <project>
+      ...
+      <build>
+        TODO
+      </build>
+      ...
+    </project>
 
