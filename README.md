@@ -57,3 +57,10 @@ Usage
       ...
     </project>
 
+
+Help
+----
+
+You can use the maven-help-plugin to get more information about all possible parameters like this:
+mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:describe -Dplugin=de.torstenwalter.maven.plugins:oracl
+edb-maven-plugin:1.0 -Ddetail
