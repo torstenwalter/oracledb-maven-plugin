@@ -82,6 +82,13 @@ public abstract class AbstractDBMojo extends AbstractMojo {
 	private String serviceName;
 
 	/**
+	 * The instanceName of your oracle database instance, commonly used in Oracle RAC databases with multiple instances.
+	 * 
+	 * @parameter expression="${oracledb.instanceName}"
+	 */
+	private String instanceName;
+
+	/**
 	 * Specify role which should be used in the "as" clause in the connection
 	 * identifier. Possible values: SYSOPER and SYSDBA. Other values are
 	 * ignored.
@@ -136,9 +143,11 @@ public abstract class AbstractDBMojo extends AbstractMojo {
 		// (SERVICE_NAME=service_name) ) )
 		connectionIdentifier
 				.append("@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=tcp)(HOST=")
-				.append(hostname).append(")(PORT=").append(port)
-				.append(")))(CONNECT_DATA=(SERVICE_NAME=").append(serviceName)
-				.append(")))");
+				.append(hostname).append(")(PORT=").append(port);
+				if (!StringUtils.isEmpty(instanceName)){
+					connectionIdentifier.append("(INSTANCE_NAME=").append(instanceName).append(")");
+			}
+					connectionIdentifier.append("))");
 
 		// add as clause if necessary
 		if (StringUtils.equalsIgnoreCase(asClause, "SYSDBA")
