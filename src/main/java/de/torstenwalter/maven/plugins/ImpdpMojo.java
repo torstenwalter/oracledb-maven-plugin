@@ -47,7 +47,12 @@ public class ImpdpMojo extends AbstractDatapumpMojo {
 	/**
 	 * @parameter
 	 */
-	private String remap_schema;
+    private String remap_schema;
+
+    /**
+     * @parameter
+     */
+    private String table_exists_action;
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		CommandLine commandLine = new CommandLine(impdp);
@@ -59,6 +64,10 @@ public class ImpdpMojo extends AbstractDatapumpMojo {
 		
 		if (StringUtils.isNotEmpty(remap_schema)) {
 			commandLine.addArgument("REMAP_SCHEMA=" + remap_schema);
+		}
+
+		if (StringUtils.isNotEmpty(table_exists_action)) {
+			commandLine.addArgument("TABLE_EXISTS_ACTION=" + table_exists_action);
 		}
 
 		getLog().info(
