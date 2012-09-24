@@ -186,7 +186,7 @@ public class SQLPlusMojo extends AbstractDBMojo {
 	private void checkFileIsReadable(File file) throws MojoFailureException {
 		if (!file.exists() || !file.canRead() || !file.isFile()) {
 			throw new MojoFailureException(file.getName()
-					+ "problem rading file '" + file.getAbsolutePath() + "'");
+					+ "problem reading file '" + file.getAbsolutePath() + "'");
 		}
 	}
 }
