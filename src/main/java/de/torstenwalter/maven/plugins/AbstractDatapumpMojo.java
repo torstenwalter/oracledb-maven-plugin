@@ -56,7 +56,17 @@ public abstract class AbstractDatapumpMojo extends AbstractDBMojo {
 	/**
 	 * @parameter
 	 */
+	private String network_link;
+
+	/**
+	 * @parameter
+	 */
 	protected String schemas;
+
+	/**
+	 * @parameter
+	 */
+	protected String tables;
 
 	public AbstractDatapumpMojo() {
 		super();
@@ -80,10 +90,6 @@ public abstract class AbstractDatapumpMojo extends AbstractDBMojo {
 			commandLine.addArgument("EXCLUDE=" + exclude);
 		}
 
-		if (StringUtils.isNotEmpty(exclude)) {
-			commandLine.addArgument("EXCLUDE=" + exclude);
-		}
-
 		if (StringUtils.isNotEmpty(include)) {
 			commandLine.addArgument("INCLUDE=" + include);
 		}
@@ -92,8 +98,16 @@ public abstract class AbstractDatapumpMojo extends AbstractDBMojo {
 			commandLine.addArgument("LOGFILE=" + logfile);
 		}
 
+		if (StringUtils.isNotEmpty(network_link)) {
+			commandLine.addArgument("NETWORK_LINK=" + network_link);
+		}
+
 		if (StringUtils.isNotEmpty(schemas)) {
 			commandLine.addArgument("SCHEMAS=" + schemas);
+		}
+
+		if (StringUtils.isNotEmpty(tables)) {
+			commandLine.addArgument("TABLES=" + tables);
 		}
 	}
 
