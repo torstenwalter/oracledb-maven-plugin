@@ -143,10 +143,11 @@ public abstract class AbstractDBMojo extends AbstractMojo {
 		// (SERVICE_NAME=service_name) ) )
 		connectionIdentifier
 				.append("@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=tcp)(HOST=")
-				.append(hostname).append(")(PORT=").append(port);
+				.append(hostname).append(")(PORT=").append(port)
+				.append(")))(CONNECT_DATA=(SERVICE_NAME=").append(serviceName).append(")");
 				if (!StringUtils.isEmpty(instanceName)){
 					connectionIdentifier.append("(INSTANCE_NAME=").append(instanceName).append(")");
-			}
+				}
 					connectionIdentifier.append("))");
 
 		// add as clause if necessary
