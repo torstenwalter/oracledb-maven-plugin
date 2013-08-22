@@ -21,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.exec.CommandLine;
@@ -81,7 +82,17 @@ public class SQLPlusMojo extends AbstractDBMojo {
 	 */
 	private MavenProject project;
 
-	public void execute() throws MojoExecutionException, MojoFailureException {
+	
+    /**
+     * <p>
+     *   A list of arguments passed to the {@code executable}, which should be of type <code>&lt;argument&gt;</code> 
+     * </p>
+     * 
+     * @parameter
+     */
+    private List<Object> arguments;	
+
+    public void execute() throws MojoExecutionException, MojoFailureException {
 		if (!StringUtils.isEmpty(sqlCommand)) {
 			// write statements to temporary file which can be passed to
 			// sqlplus
@@ -163,8 +174,18 @@ public class SQLPlusMojo extends AbstractDBMojo {
 		// credentials if given ones are not correct
 		commandLine.addArgument("-L");
 		commandLine.addArgument(getConnectionIdentifier());
-		commandLine.addArgument("@" + file.getName());
-
+        commandLine.addArgument("@" + file.getName());
+        if (arguments != null) {
+            for (Object argument : arguments) {
+                if (argument == null) {
+                    throw new MojoExecutionException("Misconfigured argument, value is null. "
+                            + "Set the argument to an empty value if this is the required behaviour.");
+                } else {
+                    commandLine.addArgument(argument.toString());
+                }
+            }
+        }
+		
 		getLog().info(
 				"Executing command line: "
 						+ obfuscateCredentials(commandLine.toString(),
@@ -189,4 +210,6 @@ public class SQLPlusMojo extends AbstractDBMojo {
 					+ "problem reading file '" + file.getAbsolutePath() + "'");
 		}
 	}
+
+
 }
