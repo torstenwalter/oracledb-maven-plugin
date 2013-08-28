@@ -97,6 +97,14 @@ public abstract class AbstractDBMojo extends AbstractMojo {
 	 */
 	private String asClause;
 
+    /**
+     * Specify connection string style which should be used (<connect_identifier> can be in the form of Net Service Name or Easy Connect)
+     *
+     * @parameter expression="${oracledb.useEasyConnect}" default-value="false"
+     */
+    protected boolean useEasyConnect;
+	
+	
 	public AbstractDBMojo() {
 		super();
 	}
@@ -135,21 +143,26 @@ public abstract class AbstractDBMojo extends AbstractMojo {
 		}
 
 		// now add the connect_identifier:
-		// To make it more robust and to not to rely on TNSNAMES we specify the
-		// full connect identifier like:
-		// (DESCRIPTION=
-		// (ADDRESS=(PROTOCOL=tcp)(HOST=host)(PORT=port) )
-		// (CONNECT_DATA=
-		// (SERVICE_NAME=service_name) ) )
-		connectionIdentifier
-				.append("@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=tcp)(HOST=")
-				.append(hostname).append(")(PORT=").append(port)
-				.append(")))(CONNECT_DATA=(SERVICE_NAME=").append(serviceName).append(")");
-				if (!StringUtils.isEmpty(instanceName)){
-					connectionIdentifier.append("(INSTANCE_NAME=").append(instanceName).append(")");
-				}
-					connectionIdentifier.append("))");
-
+		if (!useEasyConnect) {
+    		// To make it more robust and to not to rely on TNSNAMES we specify the
+    		// full connect identifier like:
+    		// (DESCRIPTION=
+    		// (ADDRESS=(PROTOCOL=tcp)(HOST=host)(PORT=port) )
+    		// (CONNECT_DATA=
+    		// (SERVICE_NAME=service_name) ) )
+    		connectionIdentifier
+    				.append("@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=tcp)(HOST=")
+    				.append(hostname).append(")(PORT=").append(port)
+    				.append(")))(CONNECT_DATA=(SERVICE_NAME=").append(serviceName).append(")");
+    				if (!StringUtils.isEmpty(instanceName)){
+    					connectionIdentifier.append("(INSTANCE_NAME=").append(instanceName).append(")");
+    				}
+    					connectionIdentifier.append("))");
+		}
+		else {
+		    // "[//]Host[:Port]/<service_name>"
+            connectionIdentifier.append("@//").append(hostname).append(":").append(port).append("/").append(serviceName);
+		}
 		// add as clause if necessary
 		if (StringUtils.equalsIgnoreCase(asClause, "SYSDBA")
 				|| StringUtils.equalsIgnoreCase(asClause, "SYSOPER")) {
