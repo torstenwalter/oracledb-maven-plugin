@@ -179,16 +179,16 @@ public class SQLPlusMojo extends AbstractDBMojo {
 			commandLine.addArgument(stringTokenizer.nextToken());
 		}
 		commandLine.addArgument("@" + file.getName());
-        if (arguments != null) {
-            for (Object argument : arguments) {
-                if (argument == null) {
-                    throw new MojoExecutionException("Misconfigured argument, value is null. "
-                            + "Set the argument to an empty value if this is the required behaviour.");
-                } else {
-                    commandLine.addArgument(argument.toString());
-                }
-            }
-        }
+		if (arguments != null) {
+			for (Object argument : arguments) {
+				if (argument == null) {
+					throw new MojoExecutionException("Misconfigured argument, value is null. "
+						+ "Set the argument to an empty value if this is the required behaviour.");
+				} else {
+					commandLine.addArgument(argument.toString());
+				}
+			}
+		}
 		
 		getLog().info(
 				"Executing command line: "
