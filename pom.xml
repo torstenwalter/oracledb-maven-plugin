@@ -3,7 +3,7 @@
 	<groupId>de.torstenwalter.maven.plugins</groupId>
 	<artifactId>oracledb-maven-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
-	<version>1.1</version>
+	<version>1.2-SNAPSHOT</version>
 	<name>oracledb-maven-plugin</name>
 	<description>A wrapper around oracle database tools like sqlplus, impdp and expdp to make them available as maven goals.</description>
 
