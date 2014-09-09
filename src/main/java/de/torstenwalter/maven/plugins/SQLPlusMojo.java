@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
@@ -173,8 +174,11 @@ public class SQLPlusMojo extends AbstractDBMojo {
 		// logon only once, without this sql*plus would prompt for
 		// credentials if given ones are not correct
 		commandLine.addArgument("-L");
-		commandLine.addArgument(getConnectionIdentifier());
-        commandLine.addArgument("@" + file.getName());
+		StringTokenizer stringTokenizer = new StringTokenizer(getConnectionIdentifier());
+		while (stringTokenizer.hasMoreTokens()) {
+			commandLine.addArgument(stringTokenizer.nextToken());
+		}
+		commandLine.addArgument("@" + file.getName());
         if (arguments != null) {
             for (Object argument : arguments) {
                 if (argument == null) {
